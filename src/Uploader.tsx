@@ -1,5 +1,4 @@
-
-import { FabricImage, Canvas } from 'fabric';
+import * as fabric from 'fabric';
 
 import { useEffect, useRef } from 'react';
 
@@ -7,6 +6,12 @@ export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const canvasEl = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+      if (canvasEl.current) {
+        createCanvas(canvasEl.current);
+      }
+    }, []);
 
     function uploadFiles(event: any){
         const fileList = event.target.files;
@@ -26,7 +31,7 @@ export function FileHandler() {
 
       }
 
-      createCanvas();
+      
     }
 
     return (
@@ -60,7 +65,7 @@ export function FileHandler() {
 
  
       </div>
-        <canvas></canvas>
+        <canvas ref={canvasEl} width={250} height={250}> </canvas>
 
        
         </>
@@ -68,25 +73,25 @@ export function FileHandler() {
     );
 }
 
-function createCanvas()
+function createCanvas(cElement:HTMLCanvasElement)
 {
-
-  const canvas = new Canvas();
+  const canvas = new fabric.Canvas(cElement);
 
   const bgImage = new Image();
-  bgImage.src = '../assets/img/perk-background.png';
+  bgImage.src = 'https://raw.githubusercontent.com/mrodriguez956/90s-Generator/refs/heads/main/public/assets/img/perk-background.png?token=GHSAT0AAAAAAC56AJ5SX7AOBS23TIC3LFCAZ6WTNYQ'; // Specify the correct path to your image
 
   bgImage.onload = () => {
-    const fabricImage = new FabricImage(bgImage, {
+    console.log("Image loaded successfully");
+    const fabricImage = new fabric.Image(bgImage, {
       left: 0,
       top: 0,
-      selectable: false
+      selectable: false, // Set to true if you want to allow selecting the image
     });
 
-
-
-canvas.add(fabricImage);
-
+    canvas.add(fabricImage);
+    canvas.renderAll();
+  };
 
 }
-}
+
+
