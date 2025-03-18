@@ -9,8 +9,7 @@ import { Canvas } from './Canvas';
 export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-   const canvasEl = useRef<HTMLCanvasElement>(null);
-   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
+   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined); //must match the prop in Canvas
    
    function uploadFiles(event: any){
     const fileList = event.target.files;
