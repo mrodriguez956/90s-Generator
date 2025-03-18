@@ -1,38 +1,50 @@
 import * as fabric from 'fabric';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import perkBackground from './assets/perkbg.png'; //why did I need to create images.d.ts for this?
+
+import { Canvas } from './Canvas';
+
 
 export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const canvasEl = useRef<HTMLCanvasElement>(null);
-
+   const canvasEl = useRef<HTMLCanvasElement>(null);
+   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
+   
+   function uploadFiles(event: any){
+    const fileList = event.target.files;
+    const icon = fileList[0];
+    console.log(fileList);
+  
+    if (!fileList || fileList.length === 0) {
+      console.error("No files selected.");
+      return;
+  }
+  
+  for (let i = 0; i < fileList.length; i++) {
+    if (!fileList[i].type.startsWith('image/png')) {
+        console.error("Only PNG files are allowed.");
+        event.target.value = ''; // Clear the input
+        return;
+    }
+  
+    else{
+      setUploadedFile(icon);
+    }
+  
+  }
+  
+  
+  }
+/*
     useEffect(() => {
       if (canvasEl.current) {
         createCanvas(canvasEl.current);
       }
     }, []);
-
-    function uploadFiles(event: any){
-        const fileList = event.target.files;
-        console.log(fileList);
-
-        if (!fileList || fileList.length === 0) {
-          console.error("No files selected.");
-          return;
-      }
-
-      for (let i = 0; i < fileList.length; i++) {
-        if (!fileList[i].type.startsWith('image/png')) {
-            console.error("Only PNG files are allowed.");
-            event.target.value = ''; // Clear the input
-            return;
-        }
-
-      }
-
-      
-    }
+*/
+ 
 
     return (
         <>
@@ -65,7 +77,7 @@ export function FileHandler() {
 
  
       </div>
-        <canvas ref={canvasEl} width={250} height={250}> </canvas>
+        <Canvas imgUpload={uploadedFile}/>
 
        
         </>
@@ -73,12 +85,13 @@ export function FileHandler() {
     );
 }
 
+/*
 function createCanvas(cElement:HTMLCanvasElement)
 {
   const canvas = new fabric.Canvas(cElement);
 
   const bgImage = new Image();
-  bgImage.src = 'https://raw.githubusercontent.com/mrodriguez956/90s-Generator/refs/heads/main/public/assets/img/perk-background.png?token=GHSAT0AAAAAAC56AJ5SX7AOBS23TIC3LFCAZ6WTNYQ'; // Specify the correct path to your image
+  bgImage.src = perkBackground;
 
   bgImage.onload = () => {
     console.log("Image loaded successfully");
@@ -87,11 +100,10 @@ function createCanvas(cElement:HTMLCanvasElement)
       top: 0,
       selectable: false, // Set to true if you want to allow selecting the image
     });
-
-    canvas.add(fabricImage);
+    canvas.backgroundImage = fabricImage;
     canvas.renderAll();
   };
 
 }
 
-
+*/
