@@ -17,7 +17,7 @@ interface CanvasProps {
   
   {
     const canvasEl = useRef<HTMLCanvasElement>(null);
-    const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+    const [canvas, setCanvas] = useState<fabric.Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
 
     useEffect(() => {
         if (canvasEl.current) { //wait until canvas element exists to run
