@@ -1,7 +1,8 @@
 import * as fabric from 'fabric';
 
 import { useEffect, useRef, useState } from 'react';
-import perkBackground from './assets/perkbg.png'; //why did I need to create images.d.ts for this?
+import perkBackground from './assets/img/perkbg.png'; //why did I need to create images.d.ts for this?
+import iconGradient from './assets/img/gradient.png'; //why did I need to create images.d.ts for this?
 
 
 interface CanvasProps { 
@@ -23,13 +24,13 @@ interface CanvasProps {
         if (canvasEl.current) { //wait until canvas element exists to run
         const newCanvas = new fabric.Canvas(canvasEl.current);
          setBackground(newCanvas);
-         setCanvas(newCanvas);
+         setCanvas(newCanvas); //store newCanvas into setCanvas for persistence
         }
       }, []); //no trigger = only runs once
 
       useEffect(() => {
         if (imgUpload && canvas) {
-         addIcon(imgUpload, canvas);
+         addIcon(imgUpload, canvas); //refer to stored canvas
         }
       }, [imgUpload]); //imgUpload trigger = only runs when imgUpload changes
 
@@ -42,21 +43,48 @@ interface CanvasProps {
 
   function addIcon(icon: File, canvas: fabric.Canvas) {
     const iconImage = new Image();
-
+    const gradImage = new Image();
     
     iconImage.src = URL.createObjectURL(icon);
+    gradImage.src = iconGradient;
+
+    
+    
     console.log("icon:" + icon.name);
     iconImage.onload = () => {
-      const fabricImage = new fabric.Image(iconImage, {
-        left: 0,
-        top: 0,
-        selectable: false,
-      });
+      gradImage.onload = () => {
+        const fabricImage = new fabric.Image(gradImage, {
+          clipPath: new fabric.Image(iconImage, {
+
+            left: 0,
+            top: 0,
+            width: 250,
+            height: 250,
+            originX: 'center',  // Center the icon horizontally
+            originY: 'center',  
+ 
+          }),
+          left: 0,
+          top: 0,
+          width: 250,
+          height: 250,
+          selectable: false,
+
+        });
+  
+        
+
       canvas.add(fabricImage);
       canvas.renderAll();
+
+      URL.revokeObjectURL(iconImage.src);
+
+      };
     };
   }
 
+
+  
 function setBackground(canvas: fabric.Canvas)
 {
   const bgImage = new Image();
