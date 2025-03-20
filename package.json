@@ -13,8 +13,10 @@
   "dependencies": {
     "bun-plugin-tailwind": "^0.0.14",
     "fabric": "^6.6.1",
+    "imagetracerjs": "^1.2.6",
     "react": "^19",
     "react-dom": "^19",
+    "svg-png-converter": "^0.0.9",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {

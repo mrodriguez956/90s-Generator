@@ -3,6 +3,7 @@ import * as fabric from 'fabric';
 import { useEffect, useRef, useState } from 'react';
 import perkBackground from './assets/img/perkbg.png'; //why did I need to create images.d.ts for this?
 import iconGradient from './assets/img/gradient.png'; //why did I need to create images.d.ts for this?
+import * as ImageTracer from "imagetracerjs";
 
 
 interface CanvasProps { 
@@ -44,10 +45,18 @@ interface CanvasProps {
   function addIcon(icon: File, canvas: fabric.Canvas) {
     const iconImage = new Image();
     const gradImage = new Image();
+    const svgImage = new fabric.Path('');
     
     iconImage.src = URL.createObjectURL(icon);
     gradImage.src = iconGradient;
 
+    
+    ImageTracer.imageToSVG(iconImage.src, (svg: any) => {
+
+      console.log("SVG:" + svg);
+      const svgImage = new fabric.Path(svg);
+    }
+  );
     
     
     console.log("icon:" + icon.name);
