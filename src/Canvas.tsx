@@ -49,7 +49,7 @@ function addIcon(icon: string, canvas: fabric.Canvas) {
   console.log("Uploaded File (iconImage):", icon);
   gradImage.src = iconGradient;
 
-  iconImage.onload = () => {
+ /* iconImage.onload = () => {
   ImageTracer.imageToSVG(iconImage.src, (svg: string) => {
      const svgImage = new fabric.Path(svg, {
          left: 0,
@@ -57,12 +57,16 @@ function addIcon(icon: string, canvas: fabric.Canvas) {
          width: 250,
          height: 250,
          selectable: false,
+         stroke: 'blue',
+         strokeWidth: 1,
      });
      canvas.add(svgImage);
      canvas.renderAll();
-   });
+   }, ImageTracer.optionpresets.default)
+   
   };
-/*
+  */
+
   iconImage.onload = () => {
     gradImage.onload = () => {
       const fabricImage = new fabric.Image(gradImage, {
@@ -91,7 +95,7 @@ function addIcon(icon: string, canvas: fabric.Canvas) {
 
     };
   };
-  */
+  
 }
 
 
