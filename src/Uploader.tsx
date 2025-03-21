@@ -8,7 +8,7 @@ import { Canvas } from './Canvas';
 export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined); //must match the prop in Canvas
+   const [uploadedFile, setUploadedFile] = useState<string | undefined>(undefined); //must match the prop in Canvas
    
    function uploadFiles(event: any){
     const fileList = event.target.files;
@@ -27,8 +27,16 @@ export function FileHandler() {
         return;
     }
   
-    else{
-      setUploadedFile(icon);
+    else{ //we need a dataURL for the image for compatibility with ImageTracer
+      const reader = new FileReader(); 
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        console.log("Data URL generated:", dataUrl); // Log the data URL
+        setUploadedFile(dataUrl);
+      }
+      reader.readAsDataURL(icon);
+
+      
     }
   
   }
@@ -75,6 +83,7 @@ export function FileHandler() {
 
  
       </div>
+        
         <Canvas imgUpload={uploadedFile}/>
 
        
