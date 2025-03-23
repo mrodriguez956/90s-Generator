@@ -1,4 +1,4 @@
-import * as fabric from 'fabric';
+import { Canvas, FabricImage, Path, Shadow } from 'fabric'; // browser
 
 import { useEffect, useRef, useState } from 'react';
 import perkBackground from './assets/img/perkbg.png'; //why did I need to create images.d.ts for this?
@@ -15,13 +15,13 @@ interface CanvasProps {
 
 
 
-export function Canvas({ imgUpload }: CanvasProps) {
+export function MainCanvas({ imgUpload }: CanvasProps) {
   const canvasEl = useRef<HTMLCanvasElement>(null);
-  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
+  const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
 
   useEffect(() => {
     if (canvasEl.current) { //wait until canvas element exists to run
-      const newCanvas = new fabric.Canvas(canvasEl.current);
+      const newCanvas = new Canvas(canvasEl.current);
       setBackground(newCanvas);
       setCanvas(newCanvas); //store newCanvas into setCanvas for persistence
     }
@@ -41,7 +41,7 @@ export function Canvas({ imgUpload }: CanvasProps) {
 }
 
 
-function addIcon(icon: string, canvas: fabric.Canvas) {
+function addIcon(icon: string, canvas: Canvas) {
   const iconImage = new Image();
   const gradImage = new Image();
 
@@ -49,28 +49,29 @@ function addIcon(icon: string, canvas: fabric.Canvas) {
   console.log("Uploaded File (iconImage):", icon);
   gradImage.src = iconGradient;
 
- /* iconImage.onload = () => {
+  iconImage.onload = () => {
   ImageTracer.imageToSVG(iconImage.src, (svg: string) => {
-     const svgImage = new fabric.Path(svg, {
+     const svgImage = new Path(svg, {
          left: 0,
          top: 0,
          width: 250,
          height: 250,
          selectable: false,
-         stroke: 'blue',
+         stroke: 'white',
          strokeWidth: 1,
+         fill: 'transparent',
      });
      canvas.add(svgImage);
      canvas.renderAll();
-   }, ImageTracer.optionpresets.default)
+   }, { ltres: 0, qtres: 0 });
    
   };
-  */
+  
 
-  iconImage.onload = () => {
+  /*iconImage.onload = () => {
     gradImage.onload = () => {
-      const fabricImage = new fabric.Image(gradImage, {
-        clipPath: new fabric.Image(iconImage, {
+      const fabricImage = new FabricImage(gradImage, {
+        clipPath: new FabricImage(iconImage, {
 
           left: 0,
           top: 0,
@@ -95,19 +96,19 @@ function addIcon(icon: string, canvas: fabric.Canvas) {
 
     };
   };
-  
+  */
 }
 
 
 
 
-function setBackground(canvas: fabric.Canvas) {
+function setBackground(canvas: Canvas) {
   const bgImage = new Image();
   bgImage.src = perkBackground;
 
   bgImage.onload = () => {
     console.log("Image loaded successfully");
-    const fabricImage = new fabric.Image(bgImage, {
+    const fabricImage = new FabricImage(bgImage, {
       left: 0,
       top: 0,
       selectable: false, // Set to true if you want to allow selecting the image

@@ -1,8 +1,5 @@
-import * as fabric from 'fabric';
-
 import { useEffect, useRef, useState } from 'react';
-import perkBackground from './assets/perkbg.png'; //why did I need to create images.d.ts for this?
-import { Canvas } from './Canvas';
+import { MainCanvas } from './Canvas';
 
 
 export function FileHandler() {
@@ -84,7 +81,7 @@ export function FileHandler() {
  
       </div>
         
-        <Canvas imgUpload={uploadedFile}/>
+        <MainCanvas imgUpload={uploadedFile}/>
 
        
         </>
