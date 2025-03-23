@@ -13,15 +13,15 @@
   "dependencies": {
     "bun-plugin-tailwind": "^0.0.14",
     "fabric": "^6.6.1",
-    "imagetracerjs": "^1.2.6",
+    "image-stroke": "^0.1.1",
     "react": "^19",
     "react-dom": "^19",
     "stickerify": "^0.2.3",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {
+    "@types/bun": "latest",
     "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@types/bun": "latest"
+    "@types/react-dom": "^19"
   }
 }
