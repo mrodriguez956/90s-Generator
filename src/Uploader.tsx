@@ -5,13 +5,18 @@ import { MainCanvas } from './Canvas';
 export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-   const [uploadedFile, setUploadedFile] = useState<string | undefined>(undefined); //must match the prop in Canvas
-   
+   const [uploadedFile, setUploadedFile] = useState<string>(); //must match the prop in Canvas
+   const [uploadedName, setUploadedName] = useState<string>(); //must match the prop in Canvas
+   const [fileData, setFileData] = useState<{name: string, data: string}[]>([]);
+
    function uploadFiles(event: any){
     const fileList = event.target.files;
     const icon = fileList[0];
-    console.log(fileList);
-  
+    console.log(fileList[0].name);
+
+    const fileName = fileList[0].name.substring(0, fileList[0].name.lastIndexOf("."));
+    setUploadedName(fileName);
+    console.log(fileName);
     if (!fileList || fileList.length === 0) {
       console.error("No files selected.");
       return;
@@ -20,16 +25,18 @@ export function FileHandler() {
   for (let i = 0; i < fileList.length; i++) {
     if (!fileList[i].type.startsWith('image/png')) {
         console.error("Only PNG files are allowed.");
-        event.target.value = ''; // Clear the input
-        return;
+        continue; //skips to next image to see if it passes the criteria
     }
-  
+
     else{ //we need a dataURL for the image for compatibility with ImageTracer
+      const fileName = fileList[i].name.substring(0, fileList[i].name.lastIndexOf("."));
+      const icon = fileList[i];
       const reader = new FileReader(); 
       reader.onload = (e) => {
         const dataUrl = e.target?.result as string;
-        console.log("Data URL generated:", dataUrl); // Log the data URL
+        console.log("Data URL generated:", fileName); // Log the data URL
         setUploadedFile(dataUrl);
+        setFileData([...fileData, {name: fileName, data: dataUrl}]); //pulls previous fileData and adds new entry
       }
       reader.readAsDataURL(icon);
 
@@ -81,7 +88,7 @@ export function FileHandler() {
  
       </div>
         
-        <MainCanvas imgUpload={uploadedFile}/>
+        <MainCanvas /*imgUpload={uploadedFile} imgName={uploadedName}*/ files={fileData}/>
 
        
         </>

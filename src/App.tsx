@@ -1,6 +1,8 @@
 import "./index.css";
 import { APITester } from "./APITester";
 import { FileHandler } from "./Uploader";
+import { IconDisplay } from "./IconDisplay";
+
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
@@ -22,9 +24,9 @@ export function App() {
         />
       </div>
 
-      
+
       <div className="flex justify-center items-center">
-      <FileHandler/>
+        <FileHandler />
       </div>
     </div>
   );

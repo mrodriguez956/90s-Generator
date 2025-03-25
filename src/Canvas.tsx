@@ -1,15 +1,18 @@
-import { Canvas, FabricImage, Path, Shadow } from 'fabric'; // browser
+import { IconDisplay } from './IconDisplay';
+
+import { Canvas, FabricImage } from 'fabric'; // browser
 
 import { useEffect, useRef, useState } from 'react';
 import perkBackground from './assets/img/perkbg.png'; //why did I need to create images.d.ts for this?
 import iconGradient from './assets/img/gradient.png'; //why did I need to create images.d.ts for this?
 import ImageStroke from 'image-stroke';
-
 import rotate from 'image-stroke/lib/method-rotate'
 
 
 interface CanvasProps {
   imgUpload?: string;
+  imgName?: string;
+  files?: { name: string, data: string }[];
 }
 
 
@@ -17,9 +20,11 @@ interface CanvasProps {
 
 
 
-export function MainCanvas({ imgUpload }: CanvasProps) {
+export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
   const canvasEl = useRef<HTMLCanvasElement>(null);
+  const downloadEl = useRef<HTMLAnchorElement>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
+  const [downloadURL, setDownloadURL] = useState('');
 
   useEffect(() => {
     if (canvasEl.current) { //wait until canvas element exists to run
@@ -30,20 +35,33 @@ export function MainCanvas({ imgUpload }: CanvasProps) {
   }, []); //no trigger = only runs once
 
   useEffect(() => {
-    if (imgUpload && canvas) {
-      addIcon(imgUpload, canvas); //refer to stored canvas
-      
+    if (files && canvas) {
+      files.forEach((file) => {
+        console.log("Adding icon:", file.name);
+        addIcon(file.data, canvas, setDownloadURL); //multiple canvas support here
+      });
     }
-  }, [imgUpload]); //imgUpload trigger = only runs when imgUpload changes
+  }, [files]); //imgUpload trigger = only runs when imgUpload changes
+
+  function downloadCanvas() {
+    if (downloadEl.current && downloadURL) {
+      downloadEl.current.href = downloadURL;
+      downloadEl.current.download = files?.[0]?.name + '.png'; //we need to add multifile download functionality here
+
+    }
+  }
 
   return (
-    <canvas ref={canvasEl} width={250} height={250}></canvas>
+    <>
+      <canvas ref={canvasEl} width={250} height={250}></canvas>
+      <a ref={downloadEl} onClick={downloadCanvas}> Download </a>
+    </>
   );
 
 }
 
 
-function addIcon(icon: string, canvas: Canvas) {
+function addIcon(icon: string, canvas: Canvas, setDownloadURL: (url: string) => void) {
   const iconImage = new Image();
   const gradImage = new Image();
 
@@ -72,7 +90,7 @@ function addIcon(icon: string, canvas: Canvas) {
         selectable: false,
 
       });
-
+      //clear canvas before adding new icon
       canvas.add(fabricImage); //adding icon to canvas with modifications (without stroke)
       canvas.renderAll();
 
@@ -88,12 +106,12 @@ function addIcon(icon: string, canvas: Canvas) {
         const imageStroke = new ImageStroke();
         imageStroke.use(rotate);
 
-        const resultCanvas = imageStroke.make(htmlImage, {
+        const resultIcon = imageStroke.make(htmlImage, {
           thickness: 2,
           color: 'black'
         });
 
-        const fabricImage = new FabricImage(resultCanvas, {
+        const fabricImage = new FabricImage(resultIcon, {
           left: 0,
           top: 0,
           width: 250,
@@ -103,6 +121,9 @@ function addIcon(icon: string, canvas: Canvas) {
 
         canvas.add(fabricImage);
         canvas.renderAll(); //BINGO!!!!!!!!!!!!!!!!
+
+        const canvasURL = canvas.toDataURL();
+        setDownloadURL(canvasURL);
       };
 
     };
