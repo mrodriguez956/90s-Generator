@@ -126,7 +126,7 @@ function addIcon(icon: string, name: string, canvas: Canvas, setDownloadURL: (ur
 
         const canvasURL = canvas.toDataURL();
         setDownloadURL(canvasURL);
-        setProcessedFiles([...processedFiles, {name: name, data: dataURL}]);
+        setProcessedFiles([...processedFiles, {name: name, data: canvasURL}]);
       };
 
     };
