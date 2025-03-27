@@ -6,8 +6,8 @@ export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
    const [uploadedFile, setUploadedFile] = useState<string>(); //must match the prop in Canvas
-   const [uploadedName, setUploadedName] = useState<string>(); //must match the prop in Canvas
-   const [fileData, setFileData] = useState<{name: string, data: string}[]>([]);
+   const [uploadedName, setUploadedName] = useState<string>(); 
+   const [fileData, setFileData] = useState<{name: string, data: string}[]>([]); //must match the prop in Canvas
 
    function uploadFiles(event: any){
     const fileList = event.target.files;
@@ -96,25 +96,3 @@ export function FileHandler() {
     );
 }
 
-/*
-function createCanvas(cElement:HTMLCanvasElement)
-{
-  const canvas = new fabric.Canvas(cElement);
-
-  const bgImage = new Image();
-  bgImage.src = perkBackground;
-
-  bgImage.onload = () => {
-    console.log("Image loaded successfully");
-    const fabricImage = new fabric.Image(bgImage, {
-      left: 0,
-      top: 0,
-      selectable: false, // Set to true if you want to allow selecting the image
-    });
-    canvas.backgroundImage = fabricImage;
-    canvas.renderAll();
-  };
-
-}
-
-*/

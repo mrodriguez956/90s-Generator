@@ -25,6 +25,7 @@ export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
   const downloadEl = useRef<HTMLAnchorElement>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
   const [downloadURL, setDownloadURL] = useState('');
+  const [processedFiles, setProcessedFiles] = useState<{name: string, data: string}[]>([]);
 
   useEffect(() => {
     if (canvasEl.current) { //wait until canvas element exists to run
@@ -38,7 +39,7 @@ export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
     if (files && canvas) {
       files.forEach((file) => {
         console.log("Adding icon:", file.name);
-        addIcon(file.data, canvas, setDownloadURL); //multiple canvas support here
+        addIcon(file.data, file.name, canvas, setDownloadURL, processedFiles, setProcessedFiles); //multiple canvas support here
       });
     }
   }, [files]); //imgUpload trigger = only runs when imgUpload changes
@@ -55,13 +56,14 @@ export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
     <>
       <canvas ref={canvasEl} width={250} height={250}></canvas>
       <a ref={downloadEl} onClick={downloadCanvas}> Download </a>
+      <IconDisplay files={processedFiles} />
     </>
   );
 
 }
 
 
-function addIcon(icon: string, canvas: Canvas, setDownloadURL: (url: string) => void) {
+function addIcon(icon: string, name: string, canvas: Canvas, setDownloadURL: (url: string) => void, processedFiles: {name: string, data: string}[], setProcessedFiles: (files: {name: string, data: string}[]) => void) {
   const iconImage = new Image();
   const gradImage = new Image();
 
@@ -124,6 +126,7 @@ function addIcon(icon: string, canvas: Canvas, setDownloadURL: (url: string) => 
 
         const canvasURL = canvas.toDataURL();
         setDownloadURL(canvasURL);
+        setProcessedFiles([...processedFiles, {name: name, data: dataURL}]);
       };
 
     };
@@ -134,7 +137,7 @@ function addIcon(icon: string, canvas: Canvas, setDownloadURL: (url: string) => 
 
 
 
-function setBackground(canvas: Canvas) {
+function setBackground(canvas: Canvas) { //potential icon background selection?
   const bgImage = new Image();
   bgImage.src = perkBackground;
 
