@@ -5,18 +5,13 @@ import { MainCanvas } from './Canvas';
 export function FileHandler() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-   const [uploadedFile, setUploadedFile] = useState<string>(); //must match the prop in Canvas
-   const [uploadedName, setUploadedName] = useState<string>(); 
+  /* const [uploadedFile, setUploadedFile] = useState<string>(); //must match the prop in Canvas
+   const [uploadedName, setUploadedName] = useState<string>(); */
    const [fileData, setFileData] = useState<{name: string, data: string}[]>([]); //must match the prop in Canvas
 
    function uploadFiles(event: any){
     const fileList = event.target.files;
-    const icon = fileList[0];
-    console.log(fileList[0].name);
 
-    const fileName = fileList[0].name.substring(0, fileList[0].name.lastIndexOf("."));
-    setUploadedName(fileName);
-    console.log(fileName);
     if (!fileList || fileList.length === 0) {
       console.error("No files selected.");
       return;
@@ -33,9 +28,7 @@ export function FileHandler() {
       const icon = fileList[i];
       const reader = new FileReader(); 
       reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        console.log("Data URL generated:", fileName); // Log the data URL
-        setUploadedFile(dataUrl);
+        const dataUrl = e.target?.result as string;// Log the data URL
         setFileData([...fileData, {name: fileName, data: dataUrl}]); //pulls previous fileData and adds new entry
       }
       reader.readAsDataURL(icon);
@@ -78,10 +71,6 @@ export function FileHandler() {
               ref={fileInputRef}
               className="hidden"
               onChange={uploadFiles}
-              onClick={(event: any) => {
-                // Reset the input value to allow selecting the same file again
-                event.target.value = null;
-              }}
             />
 
 
