@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { MainCanvas } from './Canvas';
+import { file } from 'bun';
 
 
 export function FileHandler() {
@@ -29,8 +30,15 @@ export function FileHandler() {
       const reader = new FileReader(); 
       reader.onload = (e) => {
         const dataUrl = e.target?.result as string;// Log the data URL
-        setFileData([...fileData, {name: fileName, data: dataUrl}]); //pulls previous fileData and adds new entry
-      }
+        setFileData(prevFiles => [...prevFiles, {name: fileName, data: dataUrl}]); //pulls previous fileData and adds new entry //I NEED TO KNOW WHY prevFiles worked?
+        console.log("File uploaded:", fileName, i);
+
+        setTimeout(() => {
+          console.log("Updated File array:", fileData);
+        }, 0);
+      };
+
+
       reader.readAsDataURL(icon);
 
       

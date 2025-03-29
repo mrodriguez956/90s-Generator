@@ -29,7 +29,7 @@ export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
   const [canvasURLs, setCanvasURLs] = useState<{name: string, data: string, id: number}[]>([]);
 
 
-
+  console.log("From Uploader:", files);
 
   useEffect(() => {
     if (canvasEl.current) { //wait until canvas element exists to run
@@ -41,7 +41,7 @@ export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
 
   useEffect(() => {
     if (files && canvas) {
-      console.log("files from Uploader component:", files);
+      console.log("files from Uploader component (2):", files.length);
       files.forEach((file) => {
         console.log("Adding icon:", file.name);
         addIcon(file.data, file.name, canvas, setDownloadURL, handleAddNewURL); //multiple canvas support here
