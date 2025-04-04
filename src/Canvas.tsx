@@ -14,14 +14,11 @@ interface CanvasProps {
   files?: { name: string; data: string }[];
 }
 
-export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
+export function MainCanvas({ files }: CanvasProps) {
   const canvasEl = useRef<HTMLCanvasElement>(null);
   const downloadEl = useRef<HTMLAnchorElement>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
   const [downloadURL, setDownloadURL] = useState("");
-  const [processedFiles, setProcessedFiles] = useState<
-    { name: string; data: string }[]
-  >([]);
   const [canvasURLs, setCanvasURLs] = useState<
     { name: string; data: string; id: number }[]
   >([]);
@@ -71,7 +68,6 @@ export function MainCanvas({ /*imgUpload, imgName,*/ files }: CanvasProps) {
     const gradImage = new Image();
 
     iconImage.src = icon;
-    //console.log("Uploaded File (iconImage):", icon);
     gradImage.src = iconGradient;
 
     iconImage.onload = () => {

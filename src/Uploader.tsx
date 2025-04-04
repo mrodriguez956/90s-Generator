@@ -3,8 +3,8 @@ import { MainCanvas } from "./Canvas";
 
 export function FileHandler() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  /* const [uploadedFile, setUploadedFile] = useState<string>(); //must match the prop in Canvas
-   const [uploadedName, setUploadedName] = useState<string>(); */
+   //must match the prop in Canvas
+
   const [fileData, setFileData] = useState<{ name: string; data: string }[]>(
     []
   ); //must match the prop in Canvas
@@ -46,13 +46,6 @@ export function FileHandler() {
       }
     }
   }
-  /*
-    useEffect(() => {
-      if (canvasEl.current) {
-        createCanvas(canvasEl.current);
-      }
-    }, []);
-*/
 
   return (
     <>
@@ -79,7 +72,7 @@ export function FileHandler() {
       </div>
 
       <MainCanvas
-        /*imgUpload={uploadedFile} imgName={uploadedName}*/ files={isProcessing ? [] : fileData}
+files={isProcessing ? [] : fileData}
       />
     </>
   );

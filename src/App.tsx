@@ -2,12 +2,23 @@ import "./index.css";
 import { APITester } from "./APITester";
 import { FileHandler } from "./Uploader";
 import { IconDisplay } from "./IconDisplay";
+import { useState } from "react";
 
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
 
 export function App() {
+  const [files, setFiles] = useState<{ name: string; data: string }[]>([]);
+  const [canvasURLs, setCanvasURLs] = useState<{name: string, data: string, id: number}[]>([]);
+  const [downloadURL, setDownloadURL] = useState('');
+  
+  const handleReset = () => {
+    setFiles([]);
+    setCanvasURLs([]);
+    setDownloadURL('');
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-8 text-center relative z-10">
       <h1 className="text-5xl font-bold my-4 leading-tight">PERK CREATOR</h1>
