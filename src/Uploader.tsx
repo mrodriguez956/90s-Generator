@@ -1,15 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { MainCanvas } from "./Canvas";
 
-export function FileHandler() {
+export function FileHandler({ resetTrigger }: { resetTrigger: number }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
    //must match the prop in Canvas
 
   const [fileData, setFileData] = useState<{ name: string; data: string }[]>(
     []
   ); //must match the prop in Canvas
-  
   const [isProcessing, setIsProcessing] = useState(false);
+
+  useEffect(() => {
+    // Reset the files state
+    setFileData([]);
+    setIsProcessing(false);
+  }, [resetTrigger]);
+
+
+
   function uploadFiles(event: any) {
     const fileList = event.target.files;
 
@@ -17,7 +25,9 @@ export function FileHandler() {
       console.error("No files selected.");
       return;
     }
+
     setIsProcessing(true); //preventing duplicate uploads due to trigger based on file updates on Canvas component
+    console.log("Files processing:", fileList.length);
     for (let i = 0; i < fileList.length; i++) {
       if (!fileList[i].type.startsWith("image/png")) {
         console.error("Only PNG files are allowed.");
@@ -37,6 +47,7 @@ export function FileHandler() {
             const updatedFiles = [...prevFiles, { name: fileName, data: dataUrl }];
             if (updatedFiles.length === fileList.length) {
               setIsProcessing(false);
+              console.log("Files processed");
             }
             return updatedFiles;
           });
@@ -72,7 +83,8 @@ export function FileHandler() {
       </div>
 
       <MainCanvas
-files={isProcessing ? [] : fileData}
+        files={isProcessing ? [] : fileData}
+        resetTrigger={resetTrigger}
       />
     </>
   );

@@ -1,16 +1,31 @@
+
+import { useEffect, useState } from "react";
+
 interface IconDisplayProps {
   files?: { name: string, data: string }[];
+  resetTrigger?: number;
 }
 
 
-export function IconDisplay({ files }: IconDisplayProps) {
-  return (
-    <div>
-      <h2>Icon Display</h2>
-      {files?.map((file) => (
-        console.log("IconDisplay file:", file.name),
-        <img key={file.name} src={file.data} alt={file.name} />
-      ))}
-    </div>
-  );
-}
+export function IconDisplay({ files, resetTrigger }: IconDisplayProps) {
+
+
+    useEffect(() => {
+      // Log when reset is triggered
+      console.log("Reset triggered for IconDisplay. Current files:", files);
+    }, [resetTrigger]);
+  
+    return (
+      <div>
+        <h2>Icon Display</h2>
+        {files?.length === 0 && <p>No files to display</p>}
+        {files?.map((file) => (
+          <img 
+            key={file.name} 
+            src={file.data} 
+            alt={file.name} 
+          />
+        ))}
+      </div>
+    );
+  }

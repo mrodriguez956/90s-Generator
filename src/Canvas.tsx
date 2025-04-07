@@ -1,7 +1,5 @@
 import { IconDisplay } from "./IconDisplay";
-
 import { Canvas, FabricImage } from "fabric"; // browser
-
 import { useEffect, useRef, useState } from "react";
 import perkBackground from "./assets/img/perkbg.png"; //why did I need to create images.d.ts for this?
 import iconGradient from "./assets/img/gradient.png"; //why did I need to create images.d.ts for this?
@@ -9,12 +7,11 @@ import ImageStroke from "image-stroke";
 import rotate from "image-stroke/lib/method-rotate";
 
 interface CanvasProps {
-  imgUpload?: string;
-  imgName?: string;
   files?: { name: string; data: string }[];
+  resetTrigger?: number;
 }
 
-export function MainCanvas({ files }: CanvasProps) {
+export function MainCanvas({ files, resetTrigger }: CanvasProps) {
   const canvasEl = useRef<HTMLCanvasElement>(null);
   const downloadEl = useRef<HTMLAnchorElement>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
@@ -22,6 +19,13 @@ export function MainCanvas({ files }: CanvasProps) {
   const [canvasURLs, setCanvasURLs] = useState<
     { name: string; data: string; id: number }[]
   >([]);
+
+
+  useEffect(() => {
+    // Reset the files state
+    setCanvasURLs([]);
+    setDownloadURL("");
+  }, [resetTrigger]);
 
   console.log("From Uploader:", files);
 
@@ -37,13 +41,21 @@ export function MainCanvas({ files }: CanvasProps) {
   useEffect(() => {
     if (files && canvas) {
       console.log("files from Uploader component (2):", files.length);
+      // Clear the canvas before adding new icons after a potential reset
+      canvas.clear();
+      setBackground(canvas); // Re-apply background
       files.forEach((file) => {
         console.log("Adding icon:", file.name);
-        addIcon(file.data, file.name, canvas, setDownloadURL, handleAddNewURL); //multiple canvas support here
+        addIcon(file.data, file.name, canvas, setDownloadURL, handleAddNewURL);
       });
     }
-  }, [files]); //imgUpload trigger = only runs when imgUpload changes
+  }, [files, canvas]);
 
+  useEffect(() => {
+    if (canvas) {
+      setBackground(canvas); // Ensure background is set on initial canvas creation
+    }
+  }, [canvas]);
   function downloadCanvas() {
     if (downloadEl.current && downloadURL) {
       downloadEl.current.href = downloadURL;
@@ -139,7 +151,7 @@ export function MainCanvas({ files }: CanvasProps) {
         {" "}
         Download{" "}
       </a>
-      <IconDisplay files={canvasURLs} />
+      <IconDisplay resetTrigger={resetTrigger} files={canvasURLs} />
     </>
   );
 }
