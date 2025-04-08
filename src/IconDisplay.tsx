@@ -3,17 +3,12 @@ import { useEffect, useState } from "react";
 
 interface IconDisplayProps {
   files?: { name: string, data: string }[];
-  resetTrigger?: number;
 }
 
 
-export function IconDisplay({ files, resetTrigger }: IconDisplayProps) {
+export function IconDisplay({ files }: IconDisplayProps) {
 
 
-    useEffect(() => {
-      // Log when reset is triggered
-      console.log("Reset triggered for IconDisplay. Current files:", files);
-    }, [resetTrigger]);
   
     return (
       <div>

@@ -8,10 +8,11 @@ import rotate from "image-stroke/lib/method-rotate";
 
 interface CanvasProps {
   files?: { name: string; data: string }[];
-  resetTrigger?: number;
 }
 
-export function MainCanvas({ files, resetTrigger }: CanvasProps) {
+export function MainCanvas({ files}: CanvasProps) {
+
+ 
   const canvasEl = useRef<HTMLCanvasElement>(null);
   const downloadEl = useRef<HTMLAnchorElement>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
@@ -21,7 +22,6 @@ export function MainCanvas({ files, resetTrigger }: CanvasProps) {
   >([]);
 
 
-  console.log("From Uploader:", files);
 
   useEffect(() => {
     if (canvasEl.current) {
@@ -34,7 +34,6 @@ export function MainCanvas({ files, resetTrigger }: CanvasProps) {
 
   useEffect(() => {
     if (files && canvas) {
-      console.log("files from Uploader component (2):", files.length);
       // Clear the canvas before adding new icons after a potential reset
       canvas.clear();
       setBackground(canvas); // Re-apply background
@@ -58,9 +57,7 @@ export function MainCanvas({ files, resetTrigger }: CanvasProps) {
   }
 
   const handleAddNewURL = (name: string, data: string) => {
-    console.log("Before update:", canvasURLs);
     setCanvasURLs((prev) => [...prev, { name, data, id: prev.length + 1 }]);
-    console.log("Updated canvas URLs:", canvasURLs);
   };
 
   function addIcon(

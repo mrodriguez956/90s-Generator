@@ -10,6 +10,12 @@ import reactLogo from "./react.svg";
 
 export function App() {
   const [resetTrigger, setResetTrigger] = useState(0);
+  const [fileData, setFileData] = useState<{ name: string; data: string }[]>(
+    []
+  ); //must match the prop in Canvas
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  
 
   const handleReset = () => {
     
