@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MainCanvas } from "./Canvas";
 
-export function FileHandler({ resetTrigger }: { resetTrigger: number }) {
+export function FileHandler() {
   const fileInputRef = useRef<HTMLInputElement>(null);
    //must match the prop in Canvas
 
@@ -9,12 +9,6 @@ export function FileHandler({ resetTrigger }: { resetTrigger: number }) {
     []
   ); //must match the prop in Canvas
   const [isProcessing, setIsProcessing] = useState(false);
-
-  useEffect(() => {
-    // Reset the files state
-    setFileData([]);
-    setIsProcessing(false);
-  }, [resetTrigger]);
 
 
 
@@ -84,7 +78,6 @@ export function FileHandler({ resetTrigger }: { resetTrigger: number }) {
 
       <MainCanvas
         files={isProcessing ? [] : fileData}
-        resetTrigger={resetTrigger}
       />
     </>
   );

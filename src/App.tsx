@@ -34,8 +34,8 @@ export function App() {
 
 
       <div className="flex justify-center items-center">
-      <FileHandler resetTrigger={resetTrigger} />
-      <IconDisplay resetTrigger={resetTrigger} />
+      <FileHandler/>
+      <IconDisplay/>
       <button onClick={handleReset}> 🔃</button>
       </div>
     </div>

@@ -21,12 +21,6 @@ export function MainCanvas({ files, resetTrigger }: CanvasProps) {
   >([]);
 
 
-  useEffect(() => {
-    // Reset the files state
-    setCanvasURLs([]);
-    setDownloadURL("");
-  }, [resetTrigger]);
-
   console.log("From Uploader:", files);
 
   useEffect(() => {
@@ -151,7 +145,7 @@ export function MainCanvas({ files, resetTrigger }: CanvasProps) {
         {" "}
         Download{" "}
       </a>
-      <IconDisplay resetTrigger={resetTrigger} files={canvasURLs} />
+      <IconDisplay files={canvasURLs} />
     </>
   );
 }
