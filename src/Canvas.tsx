@@ -8,19 +8,21 @@ import rotate from "image-stroke/lib/method-rotate";
 
 interface CanvasProps {
   files?: { name: string; data: string }[];
+  setCanvasURLs: React.Dispatch<React.SetStateAction<{ name: string; data: string; id: number }[]>>;
+  
 }
 
-export function MainCanvas({ files}: CanvasProps) {
+export function MainCanvas({ files, setCanvasURLs }: CanvasProps) {
 
  
   const canvasEl = useRef<HTMLCanvasElement>(null);
   const downloadEl = useRef<HTMLAnchorElement>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null); //needed so that the canvas persists after re-renders. Initially, image uploads were causing re-renders then there would be no canvas to add to
   const [downloadURL, setDownloadURL] = useState("");
-  const [canvasURLs, setCanvasURLs] = useState<
+  /*const [canvasURLs, setCanvasURLs] = useState<
     { name: string; data: string; id: number }[]
   >([]);
-
+*/
 
 
   useEffect(() => {
@@ -136,13 +138,13 @@ export function MainCanvas({ files}: CanvasProps) {
 
   return (
     <>
-      {console.log("FINAL URLS:", canvasURLs)}
+     
       <canvas ref={canvasEl} width={250} height={250}></canvas>
       <a ref={downloadEl} onClick={downloadCanvas}>
         {" "}
         Download{" "}
       </a>
-      <IconDisplay files={canvasURLs} />
+   
     </>
   );
 }

@@ -1,17 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { MainCanvas } from "./Canvas";
 
-export function FileHandler() {
+interface FileHandlerProps {
+  setFileData: React.Dispatch<React.SetStateAction<{ name: string; data: string }[]>>;
+  setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>;
+  resetStates: () => void;
+}
+export function FileHandler({ setFileData, setIsProcessing, resetStates }: FileHandlerProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
    //must match the prop in Canvas
 
-  const [fileData, setFileData] = useState<{ name: string; data: string }[]>(
+  /*const [fileData, setFileData] = useState<{ name: string; data: string }[]>(
     []
-  ); //must match the prop in Canvas
-  const [isProcessing, setIsProcessing] = useState(false);
-
+  ); //must match the prop in Canvas*/
+  /*const [isProcessing, setIsProcessing] = useState(false);*/
 
   function uploadFiles(event: any) {
+    resetStates();
     console.log("entering uploadFiles");
     const fileList = event.target.files;
 
@@ -81,8 +86,7 @@ export function FileHandler() {
           onChange={uploadFiles}
         />
       </div>
-      <MainCanvas files={isProcessing ? [] : fileData}
-      />
+
     </>
 
   );

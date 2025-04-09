@@ -3,25 +3,26 @@ import { APITester } from "./APITester";
 import { FileHandler } from "./Uploader";
 import { IconDisplay } from "./IconDisplay";
 import { useState } from "react";
-
+import { MainCanvas } from "./Canvas";
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
 
 export function App() {
-  const [resetTrigger, setResetTrigger] = useState(0);
-  const [fileData, setFileData] = useState<{ name: string; data: string }[]>(
-    []
-  ); //must match the prop in Canvas
-  const [isProcessing, setIsProcessing] = useState(false);
 
   
+  const [fileData, setFileData] = useState<{ name: string; data: string }[]>([]); //must match the prop in Canvas
+  const [canvasURLs, setCanvasURLs] = useState<{ name: string; data: string; id: number }[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleReset = () => {
-    
-    setResetTrigger(prev => prev + 1);
-    console.log("Reset triggered with value:", resetTrigger);
-  };
+  console.log("fileData from App.tsx" + fileData);
+
+  function resetStates() {
+    setFileData([]);
+    setCanvasURLs([]);
+    setIsProcessing(false);
+  }
+
   return (
     <div className="max-w-7xl mx-auto p-8 text-center relative z-10">
       <h1 className="text-5xl font-bold my-4 leading-tight">PERK CREATOR</h1>
@@ -37,12 +38,12 @@ export function App() {
           className="h-24 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] animate-[spin_20s_linear_infinite]"
         />
       </div>
-
+      <button onClick={resetStates}>Reset</button>
 
       <div className="flex justify-center items-center">
-      <FileHandler/>
-      <IconDisplay/>
-      <button onClick={handleReset}> 🔃</button>
+      <FileHandler setFileData={setFileData} setIsProcessing={setIsProcessing} resetStates={resetStates}/> {/*FileHandler Fixed*/}
+      <MainCanvas files={isProcessing ? [] : fileData} setCanvasURLs={setCanvasURLs} />  {/*MainCanvas Fixed*/}
+      <IconDisplay files={canvasURLs} />  {/*IconDisplay Fixed*/}
       </div>
     </div>
   );
