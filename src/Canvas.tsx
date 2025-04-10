@@ -67,11 +67,7 @@ export function MainCanvas({ files, setCanvasURLs }: CanvasProps) {
     <>
      
       <canvas ref={canvasEl} width={250} height={250}></canvas>
-      <a ref={downloadEl} onClick={downloadCanvas}>
-        {" "}
-        Download{" "}
-      </a>
-   
+
     </>
   );
 }

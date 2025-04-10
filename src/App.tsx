@@ -2,6 +2,7 @@ import "./index.css";
 import { APITester } from "./APITester";
 import { FileHandler } from "./Uploader";
 import { IconDisplay } from "./IconDisplay";
+import { DownloadZip } from "./DownloadZip";
 import { useState } from "react";
 import { MainCanvas } from "./Canvas";
 
@@ -38,7 +39,7 @@ export function App() {
           className="h-24 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] animate-[spin_20s_linear_infinite]"
         />
       </div>
-      <button onClick={resetStates}>Reset</button>
+      <DownloadZip files={canvasURLs} />
 
       <div className="flex justify-center items-center">
       <FileHandler setFileData={setFileData} setIsProcessing={setIsProcessing} resetStates={resetStates}/> {/*FileHandler Fixed*/}

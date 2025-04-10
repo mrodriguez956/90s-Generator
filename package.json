@@ -14,6 +14,7 @@
     "bun-plugin-tailwind": "^0.0.14",
     "fabric": "^6.6.1",
     "image-stroke": "^0.1.1",
+    "jszip": "^3.10.1",
     "react": "^19",
     "react-dom": "^19",
     "tailwindcss": "^4.0.6"
