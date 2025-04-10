@@ -1,6 +1,3 @@
-
-import { useEffect, useState } from "react";
-
 interface IconDisplayProps {
   files?: { name: string, data: string }[];
 }
