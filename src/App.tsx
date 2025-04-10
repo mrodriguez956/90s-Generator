@@ -43,8 +43,11 @@ export function App() {
       <div className="flex justify-center items-center">
       <FileHandler setFileData={setFileData} setIsProcessing={setIsProcessing} resetStates={resetStates}/> {/*FileHandler Fixed*/}
       <MainCanvas files={isProcessing ? [] : fileData} setCanvasURLs={setCanvasURLs} />  {/*MainCanvas Fixed*/}
-      <IconDisplay files={canvasURLs} />  {/*IconDisplay Fixed*/}
+      
       </div>
+<div className="w-full"> <IconDisplay files={canvasURLs} />  {/*IconDisplay Fixed*/}</div>
+      
+
     </div>
   );
 }

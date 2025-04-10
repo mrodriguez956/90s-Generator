@@ -62,80 +62,7 @@ export function MainCanvas({ files, setCanvasURLs }: CanvasProps) {
     setCanvasURLs((prev) => [...prev, { name, data, id: prev.length + 1 }]);
   };
 
-  function addIcon(
-    icon: string,
-    name: string,
-    canvas: Canvas,
-    setDownloadURL: (url: string) => void,
-    handleAddNewURL: (name: string, data: string) => void
-  ) {
-    const iconImage = new Image();
-    const gradImage = new Image();
-
-    iconImage.src = icon;
-    gradImage.src = iconGradient;
-
-    iconImage.onload = () => {
-      gradImage.onload = () => {
-        const fabricImage = new FabricImage(gradImage, {
-          clipPath: new FabricImage(iconImage, {
-            left: 0,
-            top: 0,
-            width: 250,
-            height: 250,
-            originX: "center", // Center the icon horizontally
-            originY: "center",
-          }),
-          left: 0,
-          top: 0,
-          width: 250,
-          height: 250,
-          selectable: false,
-        });
-        //clear canvas before adding new icon
-
-        const dataURL = fabricImage.toDataURL(); //convert icon to dataURL as ImageStroke library expects an HTML image element, not a Fabric canvas
-        console.log("Data URL created"); //sanity check
-
-        canvas.remove(fabricImage); //remove icon from canvas
-
-        const htmlImage = new Image();
-        htmlImage.src = dataURL; //convert dataURL to HTML image element
-
-        htmlImage.onload = () => {
-          //wait for html image to be loaded, apply stroke
-          const imageStroke = new ImageStroke();
-          imageStroke.use(rotate);
-
-          const resultIcon = imageStroke.make(htmlImage, {
-            thickness: 2,
-            color: "black",
-          });
-
-          const fabricImage = new FabricImage(resultIcon, {
-            left: 0,
-            top: 0,
-            width: 250,
-            height: 250,
-            selectable: false,
-          });
-
-          canvas.add(fabricImage);
-          canvas.renderAll(); //BINGO!!!!!!!!!!!!!!!!
-
-          const canvasURL = canvas.toDataURL();
-          setDownloadURL(canvasURL);
-
-          console.log("Canvas URL created for", name);
-
-          handleAddNewURL(name, canvasURL);
-
-          canvas.remove(fabricImage);
-        };
-      };
-    };
-  }
-
+ 
   return (
     <>
      
@@ -148,6 +75,131 @@ export function MainCanvas({ files, setCanvasURLs }: CanvasProps) {
     </>
   );
 }
+
+function addIcon(
+  icon: string,
+  name: string,
+  canvas: Canvas,
+  setDownloadURL: (url: string) => void,
+  handleAddNewURL: (name: string, data: string) => void
+) {
+  const iconImage = new Image();
+  const gradImage = new Image();
+  
+  // Keep track of loaded images and processing status
+  let iconLoaded = false;
+  let gradLoaded = false;
+  let isProcessing = false; // prevent duplicate processing
+  
+ //runs when both images are loaded
+  function processAfterLoad() {
+    // Only process once, and only if both images are loaded
+    if (isProcessing || !iconLoaded || !gradLoaded) return;
+    
+    // Set processing flag to prevent duplicates
+    isProcessing = true;
+    console.log("Processing images for:", name);
+    
+    // Create the clipped fabricImage
+    const fabricImage = new FabricImage(gradImage, {
+      clipPath: new FabricImage(iconImage, {
+        left: 0,
+        top: 0,
+        width: 250,
+        height: 250,
+        originX: "center",
+        originY: "center",
+      }),
+      left: 0,
+      top: 0,
+      width: 250,
+      height: 250,
+      selectable: false,
+    });
+    console.log("fabricImage with clipPath created for:", name);
+
+    const dataURL = fabricImage.toDataURL();
+    console.log("Data URL created for:", name);
+
+    canvas.remove(fabricImage);
+
+    const htmlImage = new Image();
+    
+    // Process the HTML image once it's loaded
+    function processHtmlImage() {
+      console.log("htmlImage loaded for:", name);
+      
+      const imageStroke = new ImageStroke();
+      imageStroke.use(rotate);
+
+      const resultIcon = imageStroke.make(htmlImage, {
+        thickness: 2,
+        color: "black",
+      });
+
+      const fabricImage = new FabricImage(resultIcon, {
+        left: 0,
+        top: 0,
+        width: 250,
+        height: 250,
+        selectable: false,
+      });
+
+      canvas.add(fabricImage);
+      canvas.renderAll();
+
+      const canvasURL = canvas.toDataURL();
+      setDownloadURL(canvasURL);
+
+      console.log("Canvas URL created for", name);
+      handleAddNewURL(name, canvasURL);
+
+      canvas.remove(fabricImage);
+    }
+
+    
+    htmlImage.onload = processHtmlImage;
+
+    htmlImage.src = dataURL;
+
+    // Handle cached images
+    if (htmlImage.complete) {
+      processHtmlImage();
+    }
+  }
+
+  // Set up onload handlers for both images
+  iconImage.onload = () => {
+    console.log("iconImage loaded for:", name);
+    iconLoaded = true;
+    processAfterLoad();
+  };
+  
+  gradImage.onload = () => {
+    console.log("gradImage loaded for:", name);
+    gradLoaded = true;
+    processAfterLoad();
+  };
+  
+  // Set sources
+  iconImage.src = icon;
+  gradImage.src = iconGradient;
+  
+  // Check if images are already complete (cached)
+  if (iconImage.complete) {
+    console.log("iconImage already loaded for:", name);
+    iconLoaded = true;
+  }
+  
+  if (gradImage.complete) {
+    console.log("gradImage already loaded for:", name);
+    gradLoaded = true;
+  }
+  
+  // Run the processing immediately if both images are already loaded
+  processAfterLoad();
+}
+
 
 function setBackground(canvas: Canvas) {
   //potential icon background selection?
