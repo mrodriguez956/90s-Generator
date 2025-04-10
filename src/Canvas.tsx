@@ -66,7 +66,7 @@ export function MainCanvas({ files, setCanvasURLs }: CanvasProps) {
   return (
     <>
      
-      <canvas ref={canvasEl} width={250} height={250}></canvas>
+      <canvas ref={canvasEl} width={256} height={256}></canvas>
 
     </>
   );
@@ -101,15 +101,15 @@ function addIcon(
       clipPath: new FabricImage(iconImage, {
         left: 0,
         top: 0,
-        width: 250,
-        height: 250,
+        width: 256,
+        height: 256,
         originX: "center",
         originY: "center",
       }),
       left: 0,
       top: 0,
-      width: 250,
-      height: 250,
+      width: 256,
+      height: 256,
       selectable: false,
     });
     console.log("fabricImage with clipPath created for:", name);
@@ -136,8 +136,8 @@ function addIcon(
       const fabricImage = new FabricImage(resultIcon, {
         left: 0,
         top: 0,
-        width: 250,
-        height: 250,
+        width: 256,
+        height: 256,
         selectable: false,
       });
 
