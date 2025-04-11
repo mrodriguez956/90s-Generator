@@ -65,9 +65,7 @@ export function FileHandler({ setFileData, setIsProcessing, resetStates }: FileH
 
   return (
     <>
-      <div className="border-[10px] border-dashed h-[250px] w-[250px] justify-content content-center">
-        <p>Drag and Drop</p>
-        <p>or</p>
+      <div className="">
         <button
           onClick={() => fileInputRef.current?.click()}
           className="bg-blue-500 px-[5px] mt-[10px]"

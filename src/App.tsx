@@ -28,6 +28,7 @@ export function App() {
     <div className="max-w-7xl mx-auto p-8 text-center relative z-10">
       <h1 className="text-5xl font-bold my-4 leading-tight">PERK CREATOR</h1>
       <div className="flex justify-center items-center gap-8 mb-8">
+        {/*
         <img
           src={logo}
           alt="Bun Logo"
@@ -37,14 +38,14 @@ export function App() {
           src={reactLogo}
           alt="React Logo"
           className="h-24 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] animate-[spin_20s_linear_infinite]"
-        />
-      </div>
-      <DownloadZip files={canvasURLs} />
-
-      <div className="flex justify-center items-center">
+        /> */}
       <FileHandler setFileData={setFileData} setIsProcessing={setIsProcessing} resetStates={resetStates}/> {/*FileHandler Fixed*/}
       <MainCanvas files={isProcessing ? [] : fileData} setCanvasURLs={setCanvasURLs} />  {/*MainCanvas Fixed*/}
       
+      </div>
+
+      <div className="flex justify-center items-center">
+
       </div>
 <div className="w-full"> <IconDisplay files={canvasURLs} />  {/*IconDisplay Fixed*/}</div>
       
