@@ -65,10 +65,10 @@ export function FileHandler({ setFileData, setIsProcessing, resetStates }: FileH
 
   return (
     <>
-      <div className="">
+      <div className="py-5 ">
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="bg-blue-500 px-[5px] mt-[10px]"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Upload Files
         </button>
