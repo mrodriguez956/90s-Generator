@@ -64,11 +64,10 @@ export function MainCanvas({ files, setCanvasURLs }: CanvasProps) {
 
  
   return (
-    <>
-     
-      <canvas ref={canvasEl} width={256} height={256}></canvas>
-
-    </>
+    <div className="absolute invisible pointer-events-none">
+      <canvas ref={canvasEl} width={250} height={250}></canvas>
+      <a ref={downloadEl} onClick={downloadCanvas}>Download</a>
+    </div>
   );
 }
 
