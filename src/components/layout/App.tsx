@@ -66,7 +66,7 @@ export function App() {
         <ol className="space-y-2 text-gray-200">
           <li>Before you start: There is a full pack available in the{" "}
           <a 
-            href="https://nightlight.gg/packs/default-icons-no-shadow" 
+            href="https://nightlight.gg/packs/90s-perk-pack" 
             className="text-pink-400 hover:text-pink-300"
             target="_blank"
             rel="noopener noreferrer"
