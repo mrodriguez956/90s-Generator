@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family:"Pixel Cyr Normal";
+  src:url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/pixcyr2.eot") format("eot"),
+      url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/pixcyr2.woff") format("woff"),
+      url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/pixcyr2.ttf") format("truetype"),
+      url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/pixcyr2.svg#PixelCyr-Normal") format("svg");
+  font-weight:normal;
+  font-style:normal;
+}
+
+@font-face {
+  font-family: "Marker";
+  src: url("https://michaelexile.github.io/fromthevoid/fonts/PermanentMarker.ttf") format("truetype");
+}
+
+@font-face {
+  font-family:"Final Fantasy Script Collection - Final Fantasy VII";
+  src:url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/Final_Fantasy_VII.eot") format("eot"),
+      url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/Final_Fantasy_VII.woff") format("woff"),
+      url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/Final_Fantasy_VII.ttf") format("truetype"),
+      url("https://cdn.jsdelivr.net/gh/98mprice/PSone.css@master/fonts/Final_Fantasy_VII.svg#FinalFantasyVII") format("svg");
+  font-weight:normal;
+  font-style:normal;
+}
+
+
+@layer base {
+  :root {
+    @apply text-[rgba(255,255,255,0.87)] bg-[#242424] font-sans;
+  }
+
+  body {
+    @apply grid place-items-center min-w-[320px] min-h-screen relative m-0;
+    
+  }
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: rgb(12, 12, 12);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.05;
+ /* background: url("./logo.svg");
+  background-size: 256px;
+  transform: rotate(-12deg) scale(1.35);
+  animation: slide 30s linear infinite;
+  pointer-events: none;
+  */
+}
+
+@keyframes slide {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 256px 224px;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.click {
+  background: url('data:image/png;base64,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');
+  background-repeat: no-repeat;
+  background-size: 30px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  transform: translate(-20px, 25px);
+  visibility:hidden
+}
+
+.radio {
+  z-index: 5;
+}
+
+.option {
+  text-transform: uppercase;
+  font-family:"Pixel Cyr Normal";
+  text-shadow: 4px 4px black;
+  font-size: 20px;
+  position: relative;
+  padding: 1rem;
+  transition: color 0.2s ease;
+}
+
+.option:hover {
+  color: #696969; /* Gold color on hover */
+}
+
+.option.selected {
+  color: #ffd700; /* Gold color when selected */
+  text-shadow: 4px 4px #000000, 0 0 10px rgba(255, 215, 0, 0.5); /* Enhanced glow effect when selected */
+}
+
+/* HIDE RADIO */
+[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+[type=radio] + .option {
+  cursor: pointer;
+}
+
+
+[type=radio]:checked + .option > .click {
+  visibility: visible;
+}
+
+.container
+{
+  border-top: 5px solid rgb(252, 255, 241);
+
+}
+
+.title
+{
+  font-size: 40px;
+  text-align: left;
+  font-family: "Final Fantasy Script Collection - Final Fantasy VII";
+  line-height: 0;
+  display: block;
+}
+
+.btn {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 2px 2px black;
+  /* Lots of padding, rectangle, rounded corners */
+  padding: 0 4rem 0 4rem;
+  background: -webkit-linear-gradient(left, transparent, #AEAFAE, transparent);
+  border: 0px;
+  border-bottom: 3px solid;
+  -o-border-image: linear-gradient(to right, transparent , rgba(255, 255, 255, 0.2), transparent);
+     border-image: linear-gradient(to right, transparent , rgba(255, 255, 255, 0.2), transparent);
+  border-image-slice: 1;
+  border-top: 3px solid;
+}
+.btn:hover {
+  background: -webkit-linear-gradient(left, transparent, lightgrey, transparent);
+}
+.btn.error {
+  background: -webkit-linear-gradient(left, transparent, #B62F28, transparent);
+}
+.btn.error:hover {
+  background: -webkit-linear-gradient(left, transparent, #E93F36, transparent);
+}
+.btn.warning {
+  background: -webkit-linear-gradient(left, transparent, #F19C42, transparent);
+}
+.btn.warning:hover {
+  background: -webkit-linear-gradient(left, transparent, #ffb544, transparent);
+}
+.btn.success {
+  background: -webkit-linear-gradient(left, transparent, #4EA35B, transparent);
+}
+.btn.success:hover {
+  background: -webkit-linear-gradient(left, transparent, #5dc66d, transparent);
+}
+.btn.primary {
+  background: -webkit-linear-gradient(left, transparent, #3E8CA5, transparent);
+}
+.btn.primary:hover {
+  background: -webkit-linear-gradient(left, transparent, #49a7c6, transparent);
+}
+.btn.alternative {
+  -o-border-image: linear-gradient(to right, transparent , #E84437, #F4F251, transparent);
+     border-image: linear-gradient(to right, transparent , #E84437, #F4F251, transparent);
+  background: -webkit-linear-gradient(left, transparent, #79F372, transparent);
+}
+.btn.alternative:hover {
+  -o-border-image: linear-gradient(to right, transparent , #6CB064, #DC4387, transparent);
+     border-image: linear-gradient(to right, transparent , #6CB064, #DC4387, transparent);
+  background: -webkit-linear-gradient(left, transparent, #77F9FB, transparent);
+}
+button:disabled,
+button[disabled]{
+    color:  #AEAFAE;
+    pointer-events:none;
+     background: -webkit-linear-gradient(left, transparent, #484a48, transparent);
+  
+}
+
+
+.guide
+{
+  font-family: "Final Fantasy Script Collection - Final Fantasy VII";
+  font-size: 34px;
+}
+
+a{
+  color: rgb(214, 67, 179);
+}
+
+button{
+  background-color: rgb(214, 67, 179);
+  font-family: "Pixel Cyr Normal";
+}
