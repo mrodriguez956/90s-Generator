@@ -3,11 +3,11 @@ import "../../styles/globals.css";
 import { FileHandler } from "../common/Uploader";
 import { IconDisplay } from "../common/IconDisplay";
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import bgImage from "../../assets/img/90s Icon Pack.png";
 import { BaseCanvas } from "../canvas/BaseCanvas";
 import { canvasAssets } from "../canvas/canvasAssets";
 import { PerkCanvas } from "../canvas/PerkCanvas";
+import { Footer } from "../common/Footer";
 
 export function App() {
   const [files, setFiles] = useState<{ name: string; data: string }[]>([]);
@@ -32,12 +32,9 @@ export function App() {
 
   return (
     <div className="max-w-7xl mx-auto text-center relative z-10">
- {/*     <h1 className="text-5xl font-bold my-4 leading-tight">PERK CREATOR</h1>
-      <h2 className="italic text-gray-600">
-        Work in Progress, Pardon the jank
-      </h2>
+      <h1 className="visually-hidden">PERK CREATOR</h1>
 
-      */}
+      
 
       <div className="flex justify-center items-center gap-8 mb-8">
         <img
@@ -72,7 +69,7 @@ export function App() {
             rel="noopener noreferrer"
           >
             90s Pack Download
-          </a> on NightLight. Use this tool for missing icons.</li>
+          </a> on NightLight. Use this tool for missing icons if I have not already updated the pack.</li>
           <li>1. Select the type of icon you want to create (Perk, Item, Addon, or Offering)</li>
           <li>2. Upload your PNG image(s) using the upload button</li>
           <li>3. Wait for the processing to complete</li>
@@ -242,35 +239,7 @@ export function App() {
         <IconDisplay files={canvasURLs} />
       </div>
 
-      <footer className="mt-16 mb-8 text-center">
-        <p className="text-gray-400 mb-4">Need help or found an issue?</p>
-        <div className="flex justify-center gap-6">
-          <a 
-            href="https://github.com/michaelexile/90s-Pack-Generator" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-pink-400 hover:text-pink-300 transition-colors"
-          >
-            GitHub
-          </a>
-          <a 
-            href="https://twitter.com/michaelexile" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-pink-400 hover:text-pink-300 transition-colors"
-          >
-            Twitter
-          </a>
-          <a 
-            href="https://discord.gg/your-discord" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-pink-400 hover:text-pink-300 transition-colors"
-          >
-            Discord
-          </a>
-        </div>
-      </footer>
+     <Footer/>
     </div>
   );
 }

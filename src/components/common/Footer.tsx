@@ -20,14 +20,6 @@ export function Footer() {
           >
             Twitter
           </a>
-          <a 
-            href="https://discord.gg/your-discord" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-pink-400 hover:text-pink-300 transition-colors"
-          >
-            Discord
-          </a>
         </div>
       </footer>
     </>
