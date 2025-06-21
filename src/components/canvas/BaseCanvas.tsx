@@ -37,8 +37,10 @@ export function BaseCanvas({ files, setCanvasURLs, jsonEndpoint, getBackgroundIm
   useEffect(() => {
     if (files && canvas) {
       canvas.clear();
+      
       files.forEach((file) => {
-        const matchingItems = itemData.filter(item => item.name.includes(file.name));
+        console.log("Checking JSON for matches: ", file.name);
+        const matchingItems = itemData.filter(item => file.name + ".png" === item.name);
         if (matchingItems.length > 0) {
           const rarity = matchingItems[0].details.rarity;
           addIcon(file.data, file.name, canvas, setDownloadURL, handleAddNewURL, rarity);
