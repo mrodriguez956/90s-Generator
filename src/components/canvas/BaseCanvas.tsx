@@ -177,7 +177,7 @@ export function BaseCanvas({ files, setCanvasURLs, jsonEndpoint, getBackgroundIm
 
   return (
     <div className="absolute invisible pointer-events-none">
-      <canvas ref={canvasEl} width={250} height={250}></canvas>
+      <canvas ref={canvasEl} width={256} height={256}></canvas>
       <a ref={downloadEl} onClick={downloadCanvas}>Download</a>
     </div>
   );
