@@ -28,7 +28,7 @@ export function IconDisplay({ files }: IconDisplayProps) {
               <img 
                 key={file.name} 
                 src={file.data} 
-                alt={file.name} 
+                alt={`Custom Icon Generated: ${file.name}`} 
                 className="w-[256px] h-auto"
               />
             ))}
