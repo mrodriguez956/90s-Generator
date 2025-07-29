@@ -5,12 +5,12 @@
   "type": "module",
   "main": "src/index.tsx",
   "module": "src/index.tsx",
-  "homepage": "https://michaelexile.github.io/90s-Pack-Creator",
+  "homepage": "https://mrodriguez956.github.io/90s-Generator",
   "scripts": {
     "dev": "bun --hot src/index.tsx",
     "start": "NODE_ENV=production bun src/index.tsx",
     "build": "bun run build.ts",
-    "postbuild": "cmd /c xcopy /Y /I sitemap.xml dist\\",
+    "postbuild": "cp sitemap.xml dist/",
     "predeploy": "bun run build",
     "deploy": "gh-pages -d dist"
   },
