@@ -224,3 +224,7 @@ button{
   background-color: rgb(214, 67, 179);
   font-family: "Pixel Cyr Normal";
 }
+
+* {
+  outline: 1px solid red !important;
+}

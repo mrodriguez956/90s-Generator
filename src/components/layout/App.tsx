@@ -40,7 +40,7 @@ export function App() {
         <img
           src={bgImage}
           alt="3D image"
-          className="p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#646cffaa] w-[512px]"
+          className="p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#646cffaa] w-full max-w-[512px]"
         />
       </div>
 
@@ -89,7 +89,7 @@ export function App() {
       </div>
 
       <div className="menu flex justify-center">
-        <div className="w-[600px] items-center radio">
+        <div className="w-full max-w-[600px] items-center radio">
           <label>
             <input
               type="radio"
