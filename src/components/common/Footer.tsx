@@ -5,7 +5,7 @@ export function Footer() {
         <p className="text-gray-400 mb-4">Need help or found an issue?</p>
         <div className="flex justify-center gap-6">
           <a 
-            href="https://github.com/michaelexile/90s-Pack-Generator" 
+            href="https://github.com/mrodriguez956/90s-Generator/issues" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-pink-400 hover:text-pink-300 transition-colors"
@@ -13,7 +13,7 @@ export function Footer() {
             GitHub
           </a>
           <a 
-            href="https://twitter.com/michaelexile" 
+            href="https://twitter.com/analogvoid" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-pink-400 hover:text-pink-300 transition-colors"
