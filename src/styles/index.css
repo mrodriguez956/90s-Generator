@@ -130,10 +130,9 @@ body::before {
   visibility: visible;
 }
 
-.container
+.content-divider
 {
   border-top: 5px solid rgb(252, 255, 241);
-
 }
 
 .title

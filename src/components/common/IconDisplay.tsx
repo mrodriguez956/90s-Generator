@@ -17,7 +17,7 @@ export function IconDisplay({ files }: IconDisplayProps) {
       )}
 
   <h2 className="title">Generated Icons</h2>
-  <div className="container pt-0">
+  <div className="w-full content-divider">
     
       {files?.length === 0 && <p className='italic text-gray-600'>No Files to Display</p>}
       {files?.length > 0 && (

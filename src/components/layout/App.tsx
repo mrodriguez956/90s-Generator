@@ -89,7 +89,7 @@ export function App() {
       </div>
 
       <div className="menu flex justify-center">
-        <div className="w-full max-w-[600px] items-center radio">
+        <div className="w-full radio">
           <label>
             <input
               type="radio"
@@ -235,7 +235,7 @@ export function App() {
         />
       </div>
 
-      <div className="w-full">
+      <div className="">
         <IconDisplay files={canvasURLs} />
       </div>
 
